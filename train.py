@@ -2,7 +2,7 @@
 Retrain the YOLO model for your own dataset.
 """
 import os, re
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 import numpy as np
 import keras.backend as K
