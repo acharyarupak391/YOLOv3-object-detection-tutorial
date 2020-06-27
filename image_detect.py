@@ -1,6 +1,6 @@
 import colorsys
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import cv2
 
 
@@ -160,10 +160,11 @@ class YOLO(object):
     
 if __name__=="__main__":
     yolo = YOLO()
-    image = 'hydrant.jpg'
+    image = 'test.jpg'
     r_image, ObjectsList = yolo.detect_img(image)
     #print(ObjectsList)
-    cv2.imshow(image, r_image)
-    if cv2.waitKey(25) & 0xFF == ord("q"):
-        cv2.destroyAllWindows()
+#     cv2.imshow(image, r_image)
+    cv2.imwrite('test-detected.jpg', r_image)
+#     if cv2.waitKey(25) & 0xFF == ord("q"):
+#         cv2.destroyAllWindows()
     yolo.close_session()
