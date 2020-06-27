@@ -40,9 +40,9 @@ def _main():
         model = create_model(input_shape, anchors, num_classes, freeze_body=2, weights_path='model_data/yolo_weights.h5') # make sure you know what you freeze
 
 
-    logging = TensorBoard(log_dir=log_dir)
-    checkpoint = ModelCheckpoint(log_dir + 'ep{epoch:03d}-loss{loss:.3f}-val_loss{val_loss:.3f}.h5',
-        monitor='val_loss', save_weights_only=True, save_best_only=True, period=3)
+#     logging = TensorBoard(log_dir=log_dir)
+#     checkpoint = ModelCheckpoint(log_dir + 'ep{epoch:03d}-loss{loss:.3f}-val_loss{val_loss:.3f}.h5',
+#         monitor='val_loss', save_weights_only=True, save_best_only=True, period=3)
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=3, verbose=1)
     early_stopping = EarlyStopping(monitor='val_loss', min_delta=0, patience=10, verbose=1)
 
@@ -67,9 +67,9 @@ def _main():
                 validation_data=data_generator_wrapper(lines[num_train:], batch_size, input_shape, anchors, num_classes),
                 validation_steps=max(1, num_val//batch_size),
                 epochs=50,
-                initial_epoch=0,
-                callbacks=[logging, checkpoint])
-        model.save_weights(log_dir + 'trained_weights_stage_1.h5')
+                initial_epoch=0)
+#                 callbacks=[logging, checkpoint])
+#         model.save_weights(log_dir + 'trained_weights_stage_1.h5')
 
     # Unfreeze and continue training, to fine-tune.
     # Train longer if the result is not good.
@@ -87,7 +87,7 @@ def _main():
             validation_steps=max(1, num_val//batch_size),
             epochs=100,
             initial_epoch=50,
-            callbacks=[logging, checkpoint, reduce_lr, early_stopping])
+            callbacks=[reduce_lr, early_stopping])
         model.save_weights(log_dir + 'trained_weights_final.h5')
 
     # Further training if needed.
