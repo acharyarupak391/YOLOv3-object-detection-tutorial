@@ -1,7 +1,7 @@
 """
 Retrain the YOLO model for your own dataset.
 """
-import os
+import os, re
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 import numpy as np
@@ -16,9 +16,15 @@ from yolo3.utils import get_random_data
 
 
 def _main():
-    annotation_path = '4_CLASS_test.txt'
+    train_file_path = os.path.realpath(__file__).rsplit('/', maxsplit=1)[0]
+    for dir in os.listdir(train_file_path):
+            if(re.search('^\d+_CLASS_', dir) and re.search('.txt$', dir)):
+                if('classes' in dir): classes_path = dir
+                else: annotation_path = dir
     log_dir = 'logs/000/'
-    classes_path = '4_CLASS_test_classes.txt'
+    if not(os.path.exists(log_dir)):
+        os.mkdir('logs)
+        os.mkdir('logs/000')
     anchors_path = 'model_data/yolo_anchors.txt'
     class_names = get_classes(classes_path)
     num_classes = len(class_names)
@@ -187,4 +193,5 @@ def data_generator_wrapper(annotation_lines, batch_size, input_shape, anchors, n
     return data_generator(annotation_lines, batch_size, input_shape, anchors, num_classes)
 
 if __name__ == '__main__':
+    print(os.path.realpath(__file__))
     _main()
