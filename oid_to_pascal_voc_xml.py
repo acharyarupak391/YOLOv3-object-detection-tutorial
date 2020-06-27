@@ -5,6 +5,7 @@ import argparse
 import cv2
 from textwrap import dedent
 from lxml import etree
+from shutil import rmtree
 
 XML_DIR = ''
 
@@ -163,6 +164,7 @@ for DIR in DIRS:
                         os.chdir("Label")
 
                 os.chdir("..")
+                rmtree("Label")
                 os.chdir("..")   
                    
         os.chdir("..")
