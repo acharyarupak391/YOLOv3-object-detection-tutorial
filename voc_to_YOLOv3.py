@@ -52,6 +52,7 @@ for CLASS in classes:
             continue
         fullname = os.path.join(os.getcwd(), CLASS, filename)
         test(fullname)
+        os.remove(fullname)
 
 for CLASS in CLS:
     list_file = open(classes_file, 'a')
