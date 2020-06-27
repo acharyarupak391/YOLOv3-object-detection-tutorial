@@ -5,6 +5,7 @@ import cv2
 
 
 import numpy as np
+import tensorflow as tf
 from keras import backend as K
 from keras.models import load_model
 from keras.layers import Input
@@ -35,7 +36,8 @@ class YOLO(object):
         self.__dict__.update(kwargs) # and update with user overrides
         self.class_names = self._get_class()
         self.anchors = self._get_anchors()
-        self.sess = K.get_session()
+#         self.sess = K.get_session()
+        self.sess = tf.compat.v1.Session()
         self.boxes, self.scores, self.classes = self.generate()
 
     def _get_class(self):
