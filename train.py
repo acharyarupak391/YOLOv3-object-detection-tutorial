@@ -23,7 +23,7 @@ def _main():
                 else: annotation_path = dir
     log_dir = 'logs/000/'
     if not(os.path.exists(log_dir)):
-        os.mkdir('logs)
+        os.mkdir('logs')
         os.mkdir('logs/000')
     anchors_path = 'model_data/yolo_anchors.txt'
     class_names = get_classes(classes_path)
